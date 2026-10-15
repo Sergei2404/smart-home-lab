@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Home Lab</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <h1>Smart Home Lab</h1>
+    <div class="header-tools">
+      <select id="project" aria-label="Active project" title="Active project"></select>
+      <button id="manage-projects" type="button">Projects…</button>
+    </div>
+    <div class="pills">
+      <span id="mqtt" class="pill pill-off" title="MQTT bridge to Home Assistant">MQTT: off</span>
+      <span id="conn" class="pill pill-off" title="Live connection to the server">connecting…</span>
+    </div>
+  </header>
+
+  <main>
+    <p id="error" class="error banner" role="alert" hidden></p>
+
+    <section>
+      <h2>Devices</h2>
+      <form id="add-device" class="row">
+        <input name="name" placeholder="Name, e.g. Living Lamp" maxlength="64" required autocomplete="off">
+        <select name="kind" aria-label="Device kind">
+          <option value="sensor">Binary sensor (on/off)</option>
+          <option value="switch">Switch</option>
+          <option value="relay">Relay</option>
+          <option value="percent">Percent sensor (0–100 %)</option>
+          <option value="temperature">Temperature sensor (°C)</option>
+        </select>
+        <button type="submit" class="primary">Add</button>
+      </form>
+      <div id="devices" class="grid"></div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>Scenarios</h2>
+        <button id="new-scenario" type="button">New scenario</button>
+      </div>
+      <div id="editor" hidden></div>
+      <div id="scenarios" class="grid wide"></div>
+    </section>
+
+    <section>
+      <h2>Event log</h2>
+      <ol id="log" class="log"></ol>
+    </section>
+  </main>
+
+  <dialog id="projects-dialog" aria-labelledby="projects-title">
+    <form method="dialog" class="dialog-head">
+      <h2 id="projects-title">Projects</h2>
+      <button class="ghost" aria-label="Close">✕</button>
+    </form>
+    <p id="projects-error" class="error" role="alert" hidden></p>
+    <ul id="project-list" class="project-list"></ul>
+
+    <h3>New project</h3>
+    <form id="new-project" class="row">
+      <input name="name" placeholder="Name, e.g. Summer House" maxlength="64" required autocomplete="off">
+      <select name="source" aria-label="Start from"></select>
+      <label class="check"><input type="checkbox" name="switch" checked> switch to it</label>
+      <button type="submit" class="primary">Create</button>
+    </form>
+
+    <h3>Import a project file</h3>
+    <form id="import-project" class="row">
+      <input name="name" placeholder="Name for the imported project" maxlength="64" required autocomplete="off">
+      <input name="file" type="file" accept=".json,application/json" required>
+      <button type="submit">Import</button>
+    </form>
+  </dialog>
+
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+{
+  "devices": [
+    { "id": "living-room-lamp", "name": "Living Room Lamp", "kind": "switch", "state": false },
+    { "id": "kitchen-light", "name": "Kitchen Light", "kind": "switch", "state": false },
+    { "id": "hall-light", "name": "Hall Light", "kind": "relay", "state": false },
+    { "id": "bathroom-fan", "name": "Bathroom Fan", "kind": "relay", "state": false },
+    { "id": "radiator", "name": "Radiator", "kind": "relay", "state": false },
+    { "id": "hall-motion", "name": "Hall Motion", "kind": "sensor", "state": false },
+    { "id": "front-door", "name": "Front Door", "kind": "sensor", "state": false },
+    { "id": "window-contact", "name": "Window Contact", "kind": "sensor", "state": false },
+    { "id": "living-room-temperature", "name": "Living Room Temperature", "kind": "temperature", "state": 22 },
+    { "id": "bathroom-humidity", "name": "Bathroom Humidity", "kind": "percent", "state": 50 }
+  ],
+  "scenarios": [
+    {
+      "id": "arrive-home", "name": "Arrive Home", "repeat": false,
+      "steps": [
+        { "type": "set", "device": "front-door", "state": true },
+        { "type": "delay", "secs": 2 },
+        { "type": "set", "device": "hall-motion", "state": true },
+        { "type": "delay", "secs": 20 },
+        { "type": "set", "device": "hall-motion", "state": false },
+        { "type": "delay", "secs": 5 },
+        { "type": "set", "device": "front-door", "state": false }
+      ]
+    },
+    {
+      "id": "shower", "name": "Shower", "repeat": false,
+      "steps": [
+        { "type": "set", "device": "bathroom-humidity", "state": 70 },
+        { "type": "delay", "secs": 10 },
+        { "type": "set", "device": "bathroom-humidity", "state": 85 },
+        { "type": "delay", "secs": 30 },
+        { "type": "set", "device": "bathroom-humidity", "state": 65 },
+        { "type": "delay", "secs": 10 },
+        { "type": "set", "device": "bathroom-humidity", "state": 50 }
+      ]
+    },
+    {
+      "id": "cold-night", "name": "Cold Night", "repeat": false,
+      "steps": [
+        { "type": "set", "device": "living-room-temperature", "state": 22 },
+        { "type": "delay", "secs": 10 },
+        { "type": "set", "device": "living-room-temperature", "state": 19 },
+        { "type": "delay", "secs": 10 },
+        { "type": "set", "device": "living-room-temperature", "state": 16 }
+      ]
+    },
+    {
+      "id": "window-dropout", "name": "Window Dropout", "repeat": false,
+      "steps": [
+        { "type": "availability", "device": "window-contact", "online": false },
+        { "type": "delay", "secs": 30 },
+        { "type": "availability", "device": "window-contact", "online": true }
+      ]
+    }
+  ]
+}
