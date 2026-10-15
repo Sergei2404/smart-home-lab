@@ -212,10 +212,12 @@ the offending item. On Ctrl-C and SIGTERM the open event streams are closed, req
 to five seconds to finish, the bridge marks itself offline and the last state is written before the
 process exits.
 
-- `src/domain` — validated types: `DeviceId`, `Device`, `Scenario`, `Step`.
+- `src/domain` — validated types: `DeviceId`, `Device`, `Scenario`, `Step`, and `Snapshot`, which is what
+  a project file holds.
 - `src/lab.rs` — state, event bus, log; `src/runner.rs` — scenarios as cancellable tokio tasks.
-- `src/projects` — the folder of project files (`store.rs`), switching, creating and deleting
-  (`service.rs`), the built-in presets (`presets.rs`); `src/storage.rs` — atomic file writes and the persister.
+- `src/projects` — the folder of project files (`store.rs`, with `file.rs` writing each file atomically),
+  switching, creating and removing projects (`service.rs`), the persister (`persister.rs`) and the
+  built-in presets (`presets.rs`).
 - `src/mqtt` — topic names and discovery payloads are pure functions; `bridge.rs` runs a poller task
   (connection and incoming messages) and a publisher task (lab events → broker).
 - `src/app.rs` — the lab, the runner and the project service wired together once (`main` builds it);
