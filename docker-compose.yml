@@ -1,0 +1,14 @@
+# Local MQTT broker for development and tests: `docker compose up -d --wait`.
+# It allows anonymous clients, so it is published on the loopback interface only.
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2
+    ports:
+      - "127.0.0.1:1883:1883"
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mosquitto_sub -h localhost -t '$$SYS/#' -C 1 -i healthcheck -W 3"]
+      interval: 2s
+      timeout: 5s
+      retries: 10

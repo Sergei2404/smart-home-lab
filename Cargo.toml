@@ -1,0 +1,35 @@
+[package]
+name = "smart-home-lab"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+description = "Virtual smart-home devices with a web UI, scenarios and an MQTT bridge to Home Assistant"
+publish = false
+license = "MIT"
+repository = "https://github.com/Sergei2404/smart-home-lab"
+readme = "README.md"
+
+[dependencies]
+anyhow = "1.0.104"
+axum = "0.8"
+chrono = { version = "0.4.45", default-features = false, features = ["serde", "clock"] }
+config = { version = "0.15.27", default-features = false, features = ["toml"] }
+futures-util = { version = "0.3", default-features = false }
+rumqttc = { version = "0.25", default-features = false }
+secrecy = { version = "0.10", features = ["serde"] }
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.154"
+thiserror = "2.0.21"
+tokio = { version = "1.53.2", features = ["macros", "rt-multi-thread", "time", "sync", "signal", "fs", "io-util", "net"] }
+tokio-stream = { version = "0.1.19", features = ["sync"] }
+tokio-util = "0.7"
+tracing = "0.1.44"
+tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
+
+[dev-dependencies]
+reqwest = { version = "0.13.5", features = ["json"], default-features = false }
+tempfile = "3.27.0"
+tokio = { version = "1.53.2", features = ["test-util"] }
+
+[lints.rust]
+unsafe_code = "forbid"

@@ -1,0 +1,72 @@
+{
+  "devices": [
+    { "id": "gate", "name": "Gate", "kind": "sensor", "state": false },
+    { "id": "porch-motion", "name": "Porch Motion", "kind": "sensor", "state": false },
+    { "id": "porch-light", "name": "Porch Light", "kind": "switch", "state": false },
+    { "id": "water-pump", "name": "Water Pump", "kind": "relay", "state": false },
+    { "id": "boiler", "name": "Boiler", "kind": "relay", "state": false },
+    { "id": "outside-temperature", "name": "Outside Temperature", "kind": "temperature", "state": 5 },
+    { "id": "greenhouse-temperature", "name": "Greenhouse Temperature", "kind": "temperature", "state": 18 },
+    { "id": "soil-moisture", "name": "Soil Moisture", "kind": "percent", "state": 40 },
+    { "id": "rain-barrel-level", "name": "Rain Barrel Level", "kind": "percent", "state": 70 },
+    { "id": "sensor-battery", "name": "Sensor Battery", "kind": "percent", "state": 100 }
+  ],
+  "scenarios": [
+    {
+      "id": "frost-night", "name": "Frost Night", "repeat": false,
+      "steps": [
+        { "type": "set", "device": "outside-temperature", "state": 5 },
+        { "type": "set", "device": "greenhouse-temperature", "state": 18 },
+        { "type": "delay", "secs": 10 },
+        { "type": "set", "device": "outside-temperature", "state": -3 },
+        { "type": "set", "device": "greenhouse-temperature", "state": 9 },
+        { "type": "delay", "secs": 10 },
+        { "type": "set", "device": "outside-temperature", "state": -8 },
+        { "type": "set", "device": "greenhouse-temperature", "state": 3 }
+      ]
+    },
+    {
+      "id": "dry-spell", "name": "Dry Spell", "repeat": false,
+      "steps": [
+        { "type": "set", "device": "soil-moisture", "state": 40 },
+        { "type": "delay", "secs": 10 },
+        { "type": "set", "device": "soil-moisture", "state": 25 },
+        { "type": "delay", "secs": 10 },
+        { "type": "set", "device": "soil-moisture", "state": 12 }
+      ]
+    },
+    {
+      "id": "watering", "name": "Watering", "repeat": false,
+      "steps": [
+        { "type": "set", "device": "water-pump", "state": true },
+        { "type": "delay", "secs": 10 },
+        { "type": "set", "device": "soil-moisture", "state": 30 },
+        { "type": "set", "device": "rain-barrel-level", "state": 60 },
+        { "type": "delay", "secs": 10 },
+        { "type": "set", "device": "soil-moisture", "state": 45 },
+        { "type": "set", "device": "rain-barrel-level", "state": 50 },
+        { "type": "set", "device": "water-pump", "state": false }
+      ]
+    },
+    {
+      "id": "battery-drain", "name": "Battery Drain", "repeat": false,
+      "steps": [
+        { "type": "set", "device": "sensor-battery", "state": 100 },
+        { "type": "delay", "secs": 10 },
+        { "type": "set", "device": "sensor-battery", "state": 60 },
+        { "type": "delay", "secs": 10 },
+        { "type": "set", "device": "sensor-battery", "state": 20 },
+        { "type": "delay", "secs": 10 },
+        { "type": "set", "device": "sensor-battery", "state": 5 }
+      ]
+    },
+    {
+      "id": "gate-offline", "name": "Gate Offline", "repeat": false,
+      "steps": [
+        { "type": "availability", "device": "gate", "online": false },
+        { "type": "delay", "secs": 30 },
+        { "type": "availability", "device": "gate", "online": true }
+      ]
+    }
+  ]
+}
